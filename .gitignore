@@ -129,16 +129,16 @@ dmypy.json
 .pyre/
 
 # Data files
-.csv
-.xls
-.xlsx
+*.csv
+*.xls
+*.xlsx
 
 #Documents and books
-.pdf
-.doc
-.docx
+*.pdf
+*.doc
+*.docx
 
 #Presentations
-.ppt
-.pptm
-.pptx
+*.ppt
+*.pptm
+*.pptx
