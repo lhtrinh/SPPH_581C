@@ -10,11 +10,11 @@
 	********************************************************************	*/
 
 	****specify the location of the data;
-	libname data 'D:\Jason\UBC\teaching\SPPH_581\winter_2022\topics\lecture_1_cluster_analysis\data';
+	libname data 'OneDrive - UBC/CLASSES/SPPH_581C';
 
 	****import data;
 	PROC IMPORT OUT= data.test_data_1
-            DATAFILE= "D:\Jason\UBC\teaching\SPPH_581\winter_2022\topics\lecture_1_cluster_analysis\data\test_data_1.csv" 
+            DATAFILE= "OneDrive - UBC/CLASSES/SPPH_581C/test_data_1.csv" 
             DBMS=CSV REPLACE;
 			GETNAMES=YES;
 			RUN;
