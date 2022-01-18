@@ -121,20 +121,22 @@ plot(hc.single, main="Single Linkage")
 par(mfrow=c(1,1))
 
 #use average linkage
-cutree(hc.average, k=3)
+# cutree(hc.average, k=3)
 
 #explore the 3 clusters
-hosp_data$hcluster <- cutree(hc.average, k=3)
+hosp_data$avg_clust <- cutree(hc.average, k=3)
 
-boxplot(smr~hcluster, data=hosp_data)
+par(mfrow=c(2,3))
+boxplot(smr~avg_clust, data=hosp_data)
 #cluster 2 has lower smr
-boxplot(infect_rate~hcluster, data=hosp_data)
+boxplot(infect_rate~avg_clust, data=hosp_data)
 #same with infection rate
-boxplot(patient_quality~hcluster, data=hosp_data)
+boxplot(patient_quality~avg_clust, data=hosp_data)
 #3 is the highest, 2 in the middle
-boxplot(cont_transition~hcluster, data=hosp_data)
-boxplot(informed_care~hcluster,data=hosp_data)
+boxplot(cont_transition~avg_clust, data=hosp_data)
+boxplot(informed_care~avg_clust,data=hosp_data)
 #same with cont & informed care
+par(mfrow=c(1,1))
 
 
 
@@ -143,16 +145,21 @@ boxplot(informed_care~hcluster,data=hosp_data)
 hosp_data$comp_hclust <- cutree(hc.complete, k=4)
 table(hosp_data$comp_hclust)
 
-par(mfrow=c(2,1))
+par(mfrow=c(2,3))
 boxplot(smr~comp_hclust, data=hosp_data)
 #cluster 2 has lower smr
-# boxplot(infect_rate~comp_hclust, data=hosp_data)
+boxplot(infect_rate~comp_hclust, data=hosp_data)
 # #same with infection rate
 boxplot(patient_quality~comp_hclust, data=hosp_data)
 #3 is the highest, 2 in the middle
-# boxplot(cont_transition~comp_hclust, data=hosp_data)
-# boxplot(informed_care~comp_hclust,data=hosp_data)
+boxplot(cont_transition~comp_hclust, data=hosp_data)
+boxplot(informed_care~comp_hclust,data=hosp_data)
 par(mfrow=c(1,1))
+#looks like cluster 4 performed the best
+
+high_perf <- hosp_data[hosp_data$comp_hclust==4,]
+dim(high_perf)
+summary(high_perf)
 
 
 
@@ -163,3 +170,29 @@ setdiff(id1, id2)
 setdiff(id2, id3)
 setdiff(id3, id1)
 #very similar clusters
+
+
+
+########################################
+#### What if you just cluster 2 vars?
+test_dat <- hosp_data %>% select(infect_rate, informed_care)
+test_clus <- kmeans(test_dat, 3)
+test_clus$cluster
+
+boxplot(hosp_data$smr~test_clus$cluster)
+boxplot(hosp_data$patient_quality~test_clus$cluster)
+test_clus$tot.withinss
+final_clus$tot.withinss
+
+setdiff(hosp_data$id[test_clus$cluster==1],id1)
+
+
+########################################
+#try mahalanobis distance
+#data=hosp_clus
+x <- hosp_clus
+x_mean <- apply(x, 2, mean)
+x_cov <- var(x)
+x_mah <- mahalanobis(x, x_mean, x_cov)
+x_mah
+
