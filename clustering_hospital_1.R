@@ -17,7 +17,8 @@ for (k in 1:10){
 plot(fstat~kval, data=k_df, type="b") #optimal k=3
 
 
-km.final <- kmeans(x, 7)
+km.final <- kmeans(hosp_clus, 3)
+hosp_new$kcluster <- km.final$cluster
 km.final$tot.withinss
 km.final$cluster
 km.final$size

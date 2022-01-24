@@ -43,6 +43,10 @@ plot(total_ss~k_val, data=kmeans_df, type=c("b"))
 hosp_data <- read.csv("C:/Users/lyhtr/OneDrive - UBC/CLASSES/SPPH_581C/Ontario_hospital_data.csv")
 str(hosp_data)
 summary(hosp_data)
+
+hosp_new <- hosp_data %>%
+  mutate(smr_inv = 1-smr,
+         infect_inv = 1-infect_rate)
 # standardized: 
 #smr, infect_rate, 
 #patient_quality, cont_transition, informed_care
@@ -50,8 +54,8 @@ summary(hosp_data)
 
 #data plots
 library(GGally)
-hosp_clus <- hosp_data%>%
-  select(smr, infect_rate,patient_quality, cont_transition, informed_care)
+hosp_clus <- hosp_new%>%
+  select(smr_inv, infect_inv,patient_quality, cont_transition, informed_care)
 ggpairs(hosp_clus)
 
 #k means clustering using fviz_nbclust:
